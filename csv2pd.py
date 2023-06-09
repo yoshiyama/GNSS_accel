@@ -10,6 +10,7 @@ timestamp = []
 lat = []
 lon = []
 alt = []
+gps_quality = []
 
 # Read the data line by line
 with open(file_name) as f:
@@ -27,6 +28,7 @@ for line in lines:
             lat.append(msg.lat)
             lon.append(msg.lon)
             alt.append(msg.altitude)
+            gps_quality.append(msg.gps_qual)
         except pynmea2.nmea.ParseError as e:
             print(f"Failed to parse line: {line}. Error: {e}")
 
@@ -35,6 +37,7 @@ df = pd.DataFrame({
     'timestamp': timestamp,
     'latitude': lat,
     'longitude': lon,
+    'gps_quality': gps_quality,
     'altitude': alt
 })
 
