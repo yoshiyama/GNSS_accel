@@ -1,0 +1,5 @@
+*.csv
+*.pickle
+.ipynb_checkpoints/
+.idea/
+README.md
