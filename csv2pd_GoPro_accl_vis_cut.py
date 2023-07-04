@@ -1,8 +1,11 @@
+# //Goproの3軸加速度データを可視化する
 import sys
 import pandas as pd
+import matplotlib.pyplot as plt
 import os
 
-def read_file_and_add_column(file_path, save_file_path=None):
+
+def read_and_plot_data(file_path, save_file_path=None):
     # Check file extension
     _, file_extension = os.path.splitext(file_path)
 
@@ -16,16 +19,18 @@ def read_file_and_add_column(file_path, save_file_path=None):
     else:
         raise ValueError(f"Unsupported file format: {file_extension}")
 
-    # Add BaseID column
-    df['BaseID'] = df.index
+    # Visualize acc_x data
+    plt.plot(df["acc_x"])
+    plt.xlabel("Index")
+    plt.ylabel("Acceleration X")
+    plt.title("Acceleration GoPro-X over index")
+    plt.show()
 
-    # Make 'BaseID' column the first column
-    df = df.set_index('BaseID').reset_index()
-
-    # Save the dataframe to a pickle file if save_file_path is specified
+    # Save data as a pickle file if a save file path is specified
     if save_file_path is not None:
         df.to_pickle(save_file_path)
-        print(f"Data saved as pickle file: {save_file_path}")
+        print("Data saved as pickle file: " + save_file_path)
+
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
@@ -33,5 +38,7 @@ if __name__ == "__main__":
     else:
         file_path = sys.argv[1]
         save_file_path = sys.argv[2] if len(sys.argv) >= 3 else None
-        read_file_and_add_column(file_path, save_file_path)
+        read_and_plot_data(file_path, save_file_path)
+
+
 
